@@ -410,11 +410,13 @@ public class ConversationController {
 				option = getById(currentConversation.getPack().getAllPlayerOptions(), name);
 				if (option == null) {
 					option = currentConversation.newPlayerOption(name);
+					option.setIndex(currentConversation.getPlayerOptions().size() - 1);
 				}
 			} else {
 				option = getById(currentConversation.getPack().getAllNpcOptions(), name);
 				if (option == null) {
 					option = currentConversation.newNpcOption(name);
+					option.setIndex(currentConversation.getNpcOptions().size() - 1);
 				}
 			}
 			IdWrapper<ConversationOption> wrapped = new IdWrapper<>(currentConversation.getPack(), option);
@@ -449,6 +451,7 @@ public class ConversationController {
 				option.setIndex(currentConversation.getNpcOptions().size() - 1);
 				BetonQuestEditor.getInstance().refresh();
 				displayOption(option);
+				npcList.requestFocus();
 			} else {
 				BetonQuestEditor.showError("option-exists");
 			}
@@ -512,6 +515,7 @@ public class ConversationController {
 				option.setIndex(currentConversation.getPlayerOptions().size() - 1);
 				BetonQuestEditor.getInstance().refresh();
 				displayOption(option);
+				playerList.requestFocus();
 			} else {
 				BetonQuestEditor.showError("option-exists");
 			}
