@@ -2,6 +2,8 @@
 
 This is the official editor for BetonQuest plugin. It was created to speed up the process of writing quests, which can be tedious and error-prone work when editing files directly in a text editor.
 
+![Editor](http://betonquest.betoncraft.pl/editor/conversations.png)
+
 ## Features
 
 * Editing all features of a quest package
@@ -27,7 +29,7 @@ It is - you can compile it for yourself (details below). But I encourage you to 
 
 ## Installation
 
-You don't have to install this program. The only thing you need is Java 8 (or newer) installed on your system. If you don't have it (the program doesn't start), you can download it from [here](https://java.com/download). To start the editor simply double-click on it's icon. This program works on Windows, Mac and Linux, as long as Java 8 is installed.
+You don't have to install this program. The only thing you need is Java 8 (or newer) installed on your system. If you don't have it (the program doesn't start), you can download it from [here](https://java.com/download). To start the editor simply double-click on its icon. This program works on Windows, Mac and Linux, as long as Java 8 is installed.
 
 ## Usage
 

@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import pl.betoncraft.betonquest.editor.BetonQuestEditor;
 import pl.betoncraft.betonquest.editor.custom.DraggableListCell;
 import pl.betoncraft.betonquest.editor.data.Instruction;
@@ -50,6 +51,12 @@ public class EcoController {
 		instance.eventsList.getSelectionModel().selectedItemProperty().addListener(event -> {
 			instance.update();
 		});
+		instance.eventsList.setOnMouseClicked(event -> {
+			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+				instance.editEvent();
+			}
+		});
+		instance.update();
 	}
 	
 	/**
@@ -63,6 +70,12 @@ public class EcoController {
 		instance.conditionsList.getSelectionModel().selectedItemProperty().addListener(event -> {
 			instance.update();
 		});
+		instance.conditionsList.setOnMouseClicked(event -> {
+			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+				instance.editCondition();
+			}
+		});
+		instance.update();
 	}
 	
 	/**
@@ -76,6 +89,12 @@ public class EcoController {
 		instance.objectivesList.getSelectionModel().selectedItemProperty().addListener(event -> {
 			instance.update();
 		});
+		instance.objectivesList.setOnMouseClicked(event -> {
+			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+				instance.editObjective();
+			}
+		});
+		instance.update();
 	}
 	
 	@FXML private void update() {
@@ -84,7 +103,7 @@ public class EcoController {
 			if (focused instanceof ListView<?>) {
 				ListView<?> list = (ListView<?>) focused;
 				Object object = list.getSelectionModel().getSelectedItem();
-				if (object != null) {
+				if (object != null && object instanceof Instruction) {
 					Instruction item = (Instruction) object;
 					String name = null;
 					switch (item.getClass().getSimpleName()) {
@@ -97,11 +116,18 @@ public class EcoController {
 					case "Objective":
 						name = BetonQuestEditor.getInstance().getLanguage().getString("objective");
 						break;
+					default:
+						name = null;
+						break;
 					}
 					if (name != null) {
 						instruction.setText(name + " '" + item.getId().get() + "': " + item.getInstruction().get());
+					} else {
+						instruction.setText(BetonQuestEditor.getInstance().getLanguage().getString("instruction"));
 					}
 				}
+			} else {
+				instruction.setText(BetonQuestEditor.getInstance().getLanguage().getString("instruction"));
 			}
 		} catch (Exception e) {
 			ExceptionController.display(e);
@@ -167,6 +193,7 @@ public class EcoController {
 			Event event = eventsList.getSelectionModel().getSelectedItem();
 			if (event != null) {
 				event.edit();
+				eventsList.getSelectionModel().select(event);
 			}
 		} catch (Exception e) {
 			ExceptionController.display(e);
@@ -178,6 +205,7 @@ public class EcoController {
 			Condition condition = conditionsList.getSelectionModel().getSelectedItem();
 			if (condition != null) {
 				condition.edit();
+				conditionsList.getSelectionModel().select(condition);
 			}
 		} catch (Exception e) {
 			ExceptionController.display(e);
@@ -189,6 +217,7 @@ public class EcoController {
 			Objective objective = objectivesList.getSelectionModel().getSelectedItem();
 			if (objective != null) {
 				objective.edit();
+				objectivesList.getSelectionModel().select(objective);
 			}
 		} catch (Exception e) {
 			ExceptionController.display(e);

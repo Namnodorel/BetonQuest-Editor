@@ -712,6 +712,8 @@ public class QuestPackage implements Editable {
 	}
 	
 	public void extractTagsAndPoints() {
+		tags.clear();
+		points.clear();
 		// extract tags and points
 		for (Condition condition : conditions) {
 			if (condition.getInstruction().get() == null) {
@@ -1056,7 +1058,9 @@ public class QuestPackage implements Editable {
 				ObjectNode node = mapper.createObjectNode();
 				addTranslatedNode(mapper, node, "name", target.getText());
 				node.put("location", target.getLocation());
-				node.put("item", target.getItem().get().getRelativeName(this));
+				if (target.getItem().get() != null) {
+					node.put("item", target.getItem().get().getRelativeName(this));
+				}
 				targets.set(target.getId().get(), node);
 			}
 			root.set("compass", targets);
